@@ -5,55 +5,111 @@
 
 <style>
 
+/* RESET */
+
 body{
-font-family: Arial, sans-serif;
-background: linear-gradient(135deg, #00c853, #009624);
+margin:0;
+font-family:Arial, sans-serif;
+background:#0f172a;
 color:white;
+overflow:hidden;
+}
+
+/* TELAS */
+
+.tela{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 text-align:center;
-padding:40px;
+padding:20px;
 }
 
-/* CARD */
+.ativa{
+display:flex;
+}
 
-.convite{
-background:rgba(255,255,255,0.1);
-border-radius:20px;
-padding:30px;
+/* INPUT */
+
+input{
+padding:12px;
+border-radius:10px;
+border:none;
+margin-top:15px;
+width:220px;
+text-align:center;
+}
+
+/* BOTÃO */
+
+button{
+margin-top:15px;
+padding:12px 25px;
+border:none;
+border-radius:12px;
+background:#00c853;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* LOADING */
+
+.loader{
+border:4px solid rgba(255,255,255,0.2);
+border-top:4px solid #00c853;
+border-radius:50%;
+width:40px;
+height:40px;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg);}
+}
+
+/* APP BANCO */
+
+.app{
+width:100%;
 max-width:400px;
-margin:auto;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+background:#111827;
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* TÍTULO */
+/* SALDO */
 
-.titulo{
-font-size:26px;
-margin-bottom:10px;
+.saldo{
+font-size:28px;
+margin:15px 0;
+color:#00e676;
+}
+
+/* PIX CARD */
+
+.pix-card{
+background:#1f2937;
+padding:15px;
+border-radius:12px;
+margin-top:15px;
 }
 
 /* BOTÃO PIX */
 
 .botao-pix{
-margin-top:20px;
-padding:15px 25px;
-border:none;
-border-radius:12px;
+margin-top:10px;
 background:white;
 color:#00c853;
-font-weight:bold;
-font-size:16px;
-cursor:pointer;
-transition:0.3s;
 }
 
-.botao-pix:hover{
-transform:scale(1.05);
-}
-
-/* MENSAGEM */
+/* MSG */
 
 .msg{
-margin-top:15px;
+margin-top:10px;
 font-size:14px;
 opacity:0;
 transition:0.3s;
@@ -63,50 +119,172 @@ transition:0.3s;
 opacity:1;
 }
 
+/* CONFETE */
+
+.confete{
+position:fixed;
+width:8px;
+height:8px;
+background:red;
+top:-10px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
+}
+
 </style>
 </head>
 
-
 <body>
 
-<div class="convite">
-
-<div class="titulo">
-🎉 Você foi convidado!
+<!-- TELA 1 -->
+<div id="tela1" class="tela ativa">
+<h2>💳 Banco da Diversão</h2>
+<p>Digite seu nome para acessar</p>
+<input id="nome" placeholder="Seu nome">
+<button onclick="entrar()">Entrar</button>
 </div>
 
-<p>
-Aniversário do <b>Arthue</b> 🎂<br>
-9 anos 🎈
-</p>
+<!-- TELA 2 -->
+<div id="tela2" class="tela">
+<div class="loader"></div>
+<p>Conectando ao sistema...</p>
+</div>
 
-<p>
-Sua presença é o maior presente ❤️<br>
-Mas se quiser enviar um PIX:
-</p>
+<!-- TELA 3 -->
+<div id="tela3" class="tela">
+
+<div class="app">
+
+<h3 id="bemvindo"></h3>
+
+<p>🎉 Acesso autorizado</p>
+
+<div class="saldo" id="saldo">R$ 0,00</div>
+
+<p>💚 Saldo de diversão liberado!</p>
+
+<div class="pix-card">
+
+<p>🎁 Quer mandar um presente?</p>
 
 <button class="botao-pix" onclick="copiarPix()">
 📲 Copiar chave PIX
 </button>
 
 <div id="msg" class="msg">
-✅ Chave PIX copiada!
+✅ PIX copiado!
 </div>
 
 </div>
 
+<p style="margin-top:20px;">
+📅 20 de Março<br>
+⌚ Às 19h<br>
+📍 Casa da vovó e do vovô<br>
+📍 R. Dona Deolinda Pereira de Souza, 681<br>
+🎂 9 anos
+</p>
 
+</div>
+
+</div>
 
 <script>
 
-function copiarPix(){
+let nomeGlobal = "";
 
+/* ENTRAR */
+
+function entrar(){
+const nome = document.getElementById("nome").value;
+
+if(!nome){
+alert("Digite seu nome 😄");
+return;
+}
+
+nomeGlobal = nome;
+
+document.getElementById("tela1").classList.remove("ativa");
+document.getElementById("tela2").classList.add("ativa");
+
+setTimeout(() => {
+
+document.getElementById("tela2").classList.remove("ativa");
+document.getElementById("tela3").classList.add("ativa");
+
+document.getElementById("bemvindo").innerText = "Olá, " + nomeGlobal + " 👋";
+
+/* anima saldo */
+animarSaldo(500);
+
+/* confete */
+soltarConfete();
+
+}, 1200);
+
+}
+
+/* SALDO ANIMADO */
+
+function animarSaldo(valorFinal){
+let atual = 0;
+
+let intervalo = setInterval(() => {
+
+atual += 10;
+
+if(atual >= valorFinal){
+atual = valorFinal;
+clearInterval(intervalo);
+}
+
+document.getElementById("saldo").innerText =
+"R$ " + atual.toFixed(2).replace(".", ",");
+
+}, 30);
+}
+
+/* COPIAR PIX */
+
+function copiarPix(){
 const chave = "SEU-PIX-AQUI";
 
 navigator.clipboard.writeText(chave).then(() => {
 document.getElementById("msg").classList.add("show");
 });
+}
 
+/* CONFETE */
+
+function soltarConfete(){
+
+for(let i=0;i<50;i++){
+
+let confete = document.createElement("div");
+
+confete.classList.add("confete");
+
+confete.style.left = Math.random()*100 + "vw";
+confete.style.background = randomColor();
+confete.style.animationDuration = (Math.random()*3+2)+"s";
+
+document.body.appendChild(confete);
+
+setTimeout(()=>confete.remove(),5000);
+
+}
+
+}
+
+function randomColor(){
+const cores = ["#00e676","#ffeb3b","#ff5252","#40c4ff","#e040fb"];
+return cores[Math.floor(Math.random()*cores.length)];
 }
 
 </script>

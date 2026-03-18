@@ -1,0 +1,117 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #00c853, #009624);
+color:white;
+text-align:center;
+padding:40px;
+}
+
+/* CARD */
+
+.convite{
+background:rgba(255,255,255,0.1);
+border-radius:20px;
+padding:30px;
+max-width:400px;
+margin:auto;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* TÍTULO */
+
+.titulo{
+font-size:26px;
+margin-bottom:10px;
+}
+
+/* BOTÃO PIX */
+
+.botao-pix{
+margin-top:20px;
+padding:15px 25px;
+border:none;
+border-radius:12px;
+background:white;
+color:#00c853;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.botao-pix:hover{
+transform:scale(1.05);
+}
+
+/* MENSAGEM */
+
+.msg{
+margin-top:15px;
+font-size:14px;
+opacity:0;
+transition:0.3s;
+}
+
+.msg.show{
+opacity:1;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="convite">
+
+<div class="titulo">
+🎉 Você foi convidado!
+</div>
+
+<p>
+Aniversário do <b>João</b> 🎂<br>
+9 anos 🎈
+</p>
+
+<p>
+Sua presença é o maior presente ❤️<br>
+Mas se quiser enviar um PIX:
+</p>
+
+<button class="botao-pix" onclick="copiarPix()">
+📲 Copiar chave PIX
+</button>
+
+<div id="msg" class="msg">
+✅ Chave PIX copiada!
+</div>
+
+</div>
+
+
+
+<script>
+
+function copiarPix(){
+
+const chave = "SEU-PIX-AQUI";
+
+navigator.clipboard.writeText(chave).then(() => {
+document.getElementById("msg").classList.add("show");
+});
+
+}
+
+</script>
+
+</body>
+</html>
+```

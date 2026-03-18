@@ -143,7 +143,7 @@ transform:translateY(100vh);
 
 <!-- TELA 1 -->
 <div id="tela1" class="tela ativa">
-<h2>💳 Banco da Diversão</h2>
+<h2>💳 Banco da Diversão do Arthur</h2>
 <p>Digite seu nome para acessar</p>
 <input id="nome" placeholder="Seu nome">
 <button onclick="entrar()">Entrar</button>
@@ -166,11 +166,11 @@ transform:translateY(100vh);
 
 <div class="saldo" id="saldo">R$ 0,00</div>
 
-<p>💚 Saldo de diversão liberado!</p>
+<p>Saldo de diversão liberado!</p>
 
 <div class="pix-card">
 
-<p>🎁 Quer mandar um presente?</p>
+<p>🎁 Quer mandar um presente? Me envie um PIX</p>
 
 <button class="botao-pix" onclick="copiarPix()">
 📲 Copiar chave PIX
@@ -253,7 +253,7 @@ document.getElementById("saldo").innerText =
 /* COPIAR PIX */
 
 function copiarPix(){
-const chave = "SEU-PIX-AQUI";
+const chave = "08366915123";
 
 navigator.clipboard.writeText(chave).then(() => {
 document.getElementById("msg").classList.add("show");
